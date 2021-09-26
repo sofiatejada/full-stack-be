@@ -24,7 +24,7 @@ const ralts = {
   sprite: 'example.png',
   name: 'ralts',
   primaryType: 'psychic',
-  secondaryType: 'fairy',
+  secondaryType: 'water',
 };
 
 describe('caught routes', () => {
@@ -59,6 +59,27 @@ describe('caught routes', () => {
     const res = await request(app).get('/api/v1/caught');
 
     expect(res.body).toEqual([mon1, mon2, mon3]);
+  });
+
+  it('updates a mon by id', async () => {
+    const currentMon = await Caught.insert(ralts);
+
+    const res = await request(app)
+      .put(`/api/v1/caught/${currentMon.id}`)
+      .send({ secondaryType: 'fairy' });
+
+    expect(res.body).toEqual({ ...currentMon, secondaryType: 'fairy' });
+  });
+
+  it('deletes a mon by id', async () => {
+    const currentMon = await Caught.insert(pikachu);
+
+    const res = await request(app)
+      .delete(`/api/v1/caught/${currentMon.id}`);
+
+    expect(res.body).toEqual({
+      message: `Pokemon ${currentMon.name} was deleted from your 'Caught' list.`
+    });
   });
 
   afterAll(() => {
