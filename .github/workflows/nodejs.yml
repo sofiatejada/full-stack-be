@@ -17,4 +17,4 @@ jobs:
     - run: npm test
       env:
         CI: true
-        DATABASE_URL: postgres://alchemy:alchemy@postgres:5432/alchemy
+        HEROKU_POSTGRESQL_WHITE_URL: postgres://alchemy:alchemy@postgres:5432/alchemy
