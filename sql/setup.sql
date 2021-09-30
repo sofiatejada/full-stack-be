@@ -4,10 +4,8 @@ DROP TABLE IF EXISTS caught;
 
 CREATE TABLE favorite_mon (
 id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-sprite TEXT NOT NULL,
 name TEXT NOT NULL,
-primary_type TEXT NOT NULL,
-secondary_type TEXT
+image TEXT NOT NULL
 );
 
 CREATE TABLE seen (
