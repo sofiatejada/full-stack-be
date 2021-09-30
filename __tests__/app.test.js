@@ -27,6 +27,21 @@ const ralts = {
   secondaryType: 'water',
 };
 
+const arnold = {
+  name: 'arnold',
+  image: 'example.png'
+};
+
+const helga = {
+  name: 'helga',
+  image: 'example.png'
+};
+
+const phoebe = {
+  name: 'phoebe',
+  image: 'example.png'
+};
+
 describe('caught routes', () => {
   beforeEach(() => {
     return setup(pool);
@@ -91,16 +106,16 @@ describe('favorites routes', () => {
   it('creates a mon', async () => {
     const res = await request(app)
       .post('/api/v1/favorites')
-      .send(swampert);
+      .send(arnold);
 
     expect(res.body).toEqual({
       id: '1',
-      ...swampert
+      ...arnold
     });
   });
 
   it('gets a mon by id', async () => {
-    const currentMon = await Favorites.insert(swampert);
+    const currentMon = await Favorites.insert(helga);
 
     const res = await request(app).get(`/api/v1/favorites/${currentMon.id}`);
 
@@ -108,9 +123,9 @@ describe('favorites routes', () => {
   });
 
   it('gets all mon', async () => {
-    const mon1 = await Favorites.insert(swampert);
-    const mon2 = await Favorites.insert(pikachu);
-    const mon3 = await Favorites.insert(ralts);
+    const mon1 = await Favorites.insert(arnold);
+    const mon2 = await Favorites.insert(helga);
+    const mon3 = await Favorites.insert(phoebe);
 
     const res = await request(app).get('/api/v1/favorites');
 
@@ -118,23 +133,23 @@ describe('favorites routes', () => {
   });
 
   it('updates a mon by id', async () => {
-    const currentMon = await Favorites.insert(ralts);
+    const currentMon = await Favorites.insert(phoebe);
 
     const res = await request(app)
       .put(`/api/v1/favorites/${currentMon.id}`)
-      .send({ secondaryType: 'fairy' });
+      .send({ name: 'Phoebe' });
 
-    expect(res.body).toEqual({ ...currentMon, secondaryType: 'fairy' });
+    expect(res.body).toEqual({ ...currentMon, name: 'Phoebe' });
   });
 
   it('deletes a mon by id', async () => {
-    const currentMon = await Favorites.insert(pikachu);
+    const currentMon = await Favorites.insert(helga);
 
     const res = await request(app)
       .delete(`/api/v1/favorites/${currentMon.id}`);
 
     expect(res.body).toEqual({
-      message: `Pokémon ${currentMon.name} was deleted from your 'Favorites' list.`
+      message: `Character ${currentMon.name} was deleted from your 'Favorites' list.`
     });
   });
 });
